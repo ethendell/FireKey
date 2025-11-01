@@ -1,0 +1,26 @@
+{
+  "summary": {
+    "model": "gpt-4.1",
+    "tokens": 1820,
+    "cost": 3.12
+  },
+  "records": [
+    {
+      "filename": "clip_001.mp4",
+      "title": "Mountain Sunrise",
+      "description": "Sunrise time-lapse over the mountains.",
+      "poster_frame": "assets/poster_frames/mountain.jpg"
+    },
+    {
+      "filename": "clip_002.mp4",
+      "title": "City Nightlife",
+      "description": "Traffic and lights in downtown at night.",
+      "poster_frame": "assets/poster_frames/city.jpg"
+    },
+    {
+      "filename": "clip_003.mp4",
+      "title": "Forest Stream",
+      "description": "Close up of water flowing through a forest stream."
+    }
+  ]
+}
