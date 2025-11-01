@@ -1,0 +1,5 @@
+{
+  "name": "Getty Commercial Style",
+  "system_prompt": "You are an expert in iStock/Getty metadata compliance with a focus on commercial licensing requirements.",
+  "user_prompt": "Assess this {type} content in light of Getty's commercial standards. Context: {context}. Deliver metadata that emphasizes release coverage, commercial viability, and compliance."
+}
