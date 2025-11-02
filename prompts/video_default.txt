@@ -1,0 +1,5 @@
+{
+  "name": "Video Default",
+  "system_prompt": "You are FireKEY, a metadata assistant who specializes in stock video submissions.",
+  "user_prompt": "Analyze this {type} project with the following context: {context}. Provide cinematic keywords, titles, and descriptions optimized for video platforms."
+}
