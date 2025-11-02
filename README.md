@@ -2,30 +2,33 @@
 
 This repository contains the FireKey project.
 
-## Metadata helper
+## Configuration
 
-Use `firekey.metadata.append_metadata` to append rows to the `metadata.csv`
-file without overwriting existing entries. The helper automatically inserts the
-following columns when the CSV is created:
+FireKey now keeps its settings in a `config.json` file. When the
+application starts it will:
 
-- `Filename`
-- `Title`
-- `Description`
-- `Keywords`
-- `Date processed` (ISO timestamp generated at runtime)
-- `Model used`
+1. Look for an existing `config.json` (either in the current directory or
+   the location provided via `FIREKEY_CONFIG_PATH`).
+2. Create one with sensible defaults if it does not already exist.
+3. Prompt you to enter your API key if the stored value is blank.
 
-### Example
+The default configuration looks like:
 
-```python
-from firekey.metadata import append_metadata
-
-append_metadata(
-    "metadata.csv",
-    filename="example.txt",
-    title="Example",
-    description="Short description",
-    keywords=["demo", "test"],
-    model_used="gpt-5-codex",
-)
+```json
+{
+  "api_key": "",
+  "default_model": "gpt-4o-mini",
+  "default_creativity": 0.4
+}
 ```
+
+## Usage
+
+Run the CLI entry point to ensure your configuration is set up:
+
+```bash
+python -m firekey
+```
+
+Pass `--show` to display the loaded configuration (with the API key
+masked) or `--config` to point to a custom configuration file.
