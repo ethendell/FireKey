@@ -95,6 +95,38 @@ class FireKeyInstaller:
 
     def install_homebrew(self):
         if shutil.which("brew"):
+            return  # Already installed
+
+        self.update_status("Preparing to install Homebrew...")
+        messagebox.showinfo(
+            "Homebrew Required",
+            "Homebrew will be installed using Terminal.\n\n"
+            "When the Terminal window opens:\n"
+            "1. Press RETURN to confirm installation.\n"
+            "2. Enter your macOS password if prompted.\n"
+            "3. Wait until installation completes.\n\n"
+            "After that, return to FireKEY Installer and click OK."
+        )
+
+        script_path = os.path.expanduser("~/firekey_install_homebrew.sh")
+        with open(script_path, "w") as f:
+            f.write("""#!/bin/bash
+echo "Installing Homebrew..."
+arch -arm64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+echo "✅ Homebrew installation finished or already installed."
+read -p "Press RETURN to close this window..."
+""")
+        os.chmod(script_path, 0o755)
+
+        subprocess.run(f"open -a Terminal {script_path}", shell=True)
+
+        messagebox.showinfo(
+            "FireKEY Installer",
+            "Once Homebrew finishes installing in Terminal, click OK to continue."
+        )
+
+        if not shutil.which("brew"):
+            raise RuntimeError("Homebrew installation incomplete. Please rerun after finishing Homebrew setup.")
             return
         self.update_status("Opening Homebrew installer in Terminal...")
         messagebox.showinfo(
@@ -160,6 +192,10 @@ class FireKeyInstaller:
     def finalize_install(self):
         self.update_status("Cleaning up temporary files...")
         shutil.rmtree("firekey_temp", ignore_errors=True)
+        try:
+            os.remove(os.path.expanduser("~/firekey_install_homebrew.sh"))
+        except FileNotFoundError:
+            pass
 
     def launch_firekey(self):
         app_exec = f"{APP_PATH}/Contents/MacOS/main.py"
