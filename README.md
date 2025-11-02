@@ -191,3 +191,26 @@ python -m firekey
 
 Pass `--show` to display the loaded configuration (with the API key
 masked) or `--config` to point to a custom configuration file.
+
+## macOS distribution
+
+Use the helper scripts in `scripts/` to package FireKey for macOS users. All commands should be executed from the repository root (the scripts resolve paths automatically).
+
+1. Build the `.app` bundle with PyInstaller. This creates `dist/FireKEY.app` and, if `assets/firekey.icns` is present locally, embeds it as the menu bar icon.
+   ```bash
+   scripts/build_mac_app.sh
+   ```
+2. (Optional) Create a disk image for drag-and-drop installation. Requires [`create-dmg`](https://github.com/create-dmg/create-dmg).
+   ```bash
+   scripts/create_dmg.sh
+   ```
+3. (Optional) Generate a signed installer package using `pkgbuild` from the Xcode command line tools.
+   ```bash
+   scripts/create_pkg.sh
+   ```
+4. Launch the bundled app locally to confirm that the Tkinter UI opens as expected.
+   ```bash
+   open dist/FireKEY.app
+   ```
+
+The repository does not track the macOS icon. Add your own `.icns` file at `assets/firekey.icns` before running the build script if you want a custom appearance.
