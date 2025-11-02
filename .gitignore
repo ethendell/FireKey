@@ -6,3 +6,9 @@ logs/
 .cache/
 .env
 .venv
+build/
+dist/
+FireKEY.spec
+assets/firekey.icns
+*.dmg
+*.pkg
