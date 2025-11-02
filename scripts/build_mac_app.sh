@@ -21,8 +21,7 @@ else
   echo "Warning: ${ICON_PATH} not found. The app will use the default PyInstaller icon." >&2
 fi
 
-PYINSTALLER_CMD=(
-  pyinstaller
+PYINSTALLER_ARGS=(
   --noconfirm
   --windowed
   --onefile
@@ -34,6 +33,23 @@ PYINSTALLER_CMD=(
 # Clean previous build artifacts to avoid stale bundles
 rm -rf build dist FireKEY.spec
 
-"${PYINSTALLER_CMD[@]}"
+pyinstaller "${PYINSTALLER_ARGS[@]}"
 
-echo "macOS application bundle created at dist/FireKEY.app"
+APP_BUNDLE="dist/FireKEY.app"
+INFO_PLIST="${APP_BUNDLE}/Contents/Info.plist"
+RESOURCES_DIR="${APP_BUNDLE}/Contents/Resources"
+RESOURCE_ICON="${RESOURCES_DIR}/firekey.icns"
+
+if [[ ! -f "${INFO_PLIST}" ]]; then
+  echo "Error: ${INFO_PLIST} not found. PyInstaller may have failed." >&2
+  exit 1
+fi
+
+python3 "${SCRIPT_DIR}/update_plist.py" "${INFO_PLIST}"
+
+if [[ -f "${ICON_PATH}" ]]; then
+  mkdir -p "${RESOURCES_DIR}"
+  cp "${ICON_PATH}" "${RESOURCE_ICON}"
+fi
+
+echo "macOS application bundle created at ${APP_BUNDLE}"

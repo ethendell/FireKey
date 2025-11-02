@@ -6,7 +6,8 @@ REPO_ROOT=$(cd "${SCRIPT_DIR}/.." && pwd)
 
 cd "${REPO_ROOT}"
 
-APP_PATH="dist/FireKEY.app"
+DIST_DIR="${REPO_ROOT}/dist"
+APP_PATH="${DIST_DIR}/FireKEY.app"
 PKG_NAME="FireKEY.pkg"
 IDENTIFIER="com.firekey.app"
 VERSION="1.0"
@@ -21,7 +22,7 @@ if ! command -v pkgbuild >/dev/null 2>&1; then
   exit 1
 fi
 
-rm -f "${PKG_NAME}"
+rm -f "${DIST_DIR}/${PKG_NAME}"
 
 PKG_ROOT=$(mktemp -d)
 trap 'rm -rf "${PKG_ROOT}"' EXIT
@@ -33,6 +34,6 @@ pkgbuild \
   --identifier "${IDENTIFIER}" \
   --version "${VERSION}" \
   --install-location / \
-  "${PKG_NAME}"
+  "${DIST_DIR}/${PKG_NAME}"
 
-echo "Installer package created at ${PKG_NAME}"
+echo "Installer package created at dist/${PKG_NAME}"

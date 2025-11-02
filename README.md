@@ -22,6 +22,51 @@ A curated data set is bundled with the repository. Modify `data/sample_metadata.
 ```bash
 pytest
 ```
+
+## Packaging for macOS
+
+The repository ships helper scripts that wrap the full packaging workflow on macOS. Install the required tooling first:
+
+```bash
+brew install create-dmg
+pip install pyinstaller
+```
+
+Ensure `assets/firekey.icns` is available locally before building so the application bundle and DMG display the custom icon. (The file is ignored by Git, so copy it into the `assets/` directory if it is not present.)
+
+### 1. Build the `.app`
+
+```bash
+./scripts/build_mac_app.sh
+```
+
+The script invokes PyInstaller with the correct windowed settings, updates `dist/FireKEY.app/Contents/Info.plist` with the required bundle metadata, and copies `assets/firekey.icns` into the bundle resources.
+
+### 2. Test the bundle
+
+```bash
+open dist/FireKEY.app
+```
+
+Launching the bundle verifies that Tkinter starts correctly on macOS.
+
+### 3. Create the DMG installer
+
+```bash
+./scripts/create_dmg.sh
+```
+
+This uses `create-dmg` to produce `dist/FireKEY-Installer.dmg` with a drag-and-drop layout that includes an Applications shortcut.
+
+### 4. (Optional) Create a PKG installer
+
+```bash
+./scripts/create_pkg.sh
+```
+
+Running the script builds `dist/FireKEY.pkg` via `pkgbuild`, ready for distribution through managed deployments.
+
+After producing the DMG, double-click it, drag **FireKEY.app** into **Applications**, eject the volume, and open FireKEY from Launchpad to confirm the installation.
 FireKEY is a lightweight desktop application that helps build consistent prompts and metadata for stock submissions.
 
 ## Features
