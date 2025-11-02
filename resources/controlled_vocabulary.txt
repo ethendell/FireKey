@@ -1,0 +1,13 @@
+# Controlled vocabulary for keyword validation
+accessibility
+analysis
+archives
+audio
+classification
+dataset
+documentation
+firekey
+geospatial
+metadata
+preservation
+research
