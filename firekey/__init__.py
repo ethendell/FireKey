@@ -1,3 +1,8 @@
+"""FireKey package."""
+
+from .app import FireKeyApp, main
+
+__all__ = ["FireKeyApp", "main"]
 """FireKey package initialization."""
 
 from .metadata import extract_key_frames, generate_metadata
