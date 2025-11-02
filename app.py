@@ -1,3 +1,11 @@
+"""Entry point for running the FireKEY GUI application."""
+from __future__ import annotations
+
+from firekey.gui import run_app
+
+
+if __name__ == "__main__":
+    run_app()
 """FireKey Tkinter GUI application.
 
 This module defines a Tkinter-based graphical user interface that offers
