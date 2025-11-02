@@ -1,10 +1,13 @@
-"""Utilities for reading and writing FireKEY configuration."""
+"""Configuration management helpers for FireKey."""
 from __future__ import annotations
 
+import json
+import os
+import sys
 from dataclasses import dataclass
 from pathlib import Path
-import json
-from typing import Optional, Any, Dict
+from typing import Any, Callable, Dict, Optional
+from collections.abc import MutableMapping
 
 
 CONFIG_PATH = Path(__file__).resolve().parent.parent / "config.json"
@@ -12,39 +15,32 @@ CONFIG_PATH = Path(__file__).resolve().parent.parent / "config.json"
 
 @dataclass
 class AppConfig:
-    """Represents persisted configuration for the application."""
+    """Represents persisted configuration for the Tkinter application."""
 
     last_template: Optional[str] = None
 
     @classmethod
     def load(cls, path: Path = CONFIG_PATH) -> "AppConfig":
+        """Load configuration data from ``path`` into an :class:`AppConfig`."""
+
         if not path.exists():
             return cls()
         try:
             data = json.loads(path.read_text(encoding="utf-8"))
         except (json.JSONDecodeError, OSError):
             return cls()
+
         last_template = data.get("last_template")
         if last_template is not None and not isinstance(last_template, str):
             last_template = None
         return cls(last_template=last_template)
 
     def save(self, path: Path = CONFIG_PATH) -> None:
+        """Persist the configuration to ``path``."""
+
         payload: Dict[str, Any] = {"last_template": self.last_template}
         path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
 
-
-__all__ = ["AppConfig", "CONFIG_PATH"]
-"""Configuration management for FireKey."""
-
-from __future__ import annotations
-
-import json
-import os
-import sys
-from collections.abc import MutableMapping
-from pathlib import Path
-from typing import Any, Callable, Dict
 
 DEFAULT_CONFIG: Dict[str, Any] = {
     "api_key": "",
@@ -157,3 +153,12 @@ class ConfigManager:
         parent = self.config_path.parent
         if parent and not parent.exists():
             parent.mkdir(parents=True, exist_ok=True)
+
+
+__all__ = [
+    "AppConfig",
+    "ConfigManager",
+    "CONFIG_PATH",
+    "DEFAULT_CONFIG",
+    "default_config_path",
+]
