@@ -1,24 +1,34 @@
 # FireKey
 
-FireKEY is a Tkinter-based desktop application that generates stock photo metadata using OpenAI's API.
+This repository contains the FireKey project.
 
-## Requirements
+## Configuration
 
-- Python 3.10+
-- OpenAI API key available as the `OPENAI_API_KEY` environment variable
+FireKey now keeps its settings in a `config.json` file. When the
+application starts it will:
 
-Install dependencies:
+1. Look for an existing `config.json` (either in the current directory or
+   the location provided via `FIREKEY_CONFIG_PATH`).
+2. Create one with sensible defaults if it does not already exist.
+3. Prompt you to enter your API key if the stored value is blank.
 
-```bash
-pip install openai pillow opencv-python pandas tkinter
+The default configuration looks like:
+
+```json
+{
+  "api_key": "",
+  "default_model": "gpt-4o-mini",
+  "default_creativity": 0.4
+}
 ```
 
 ## Usage
 
+Run the CLI entry point to ensure your configuration is set up:
+
 ```bash
-python firekey_app.py
+python -m firekey
 ```
 
-1. Launch the application and click **Browse** to choose a folder containing images.
-2. Press **Process Folder** to send each image to the OpenAI API for metadata generation.
-3. A `metadata.csv` file will be created inside the selected folder when processing completes.
+Pass `--show` to display the loaded configuration (with the API key
+masked) or `--config` to point to a custom configuration file.
