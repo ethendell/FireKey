@@ -1,3 +1,14 @@
+"""FireKey processing utilities."""
+
+from .processor import FireKeyProcessor
+from .exceptions import FireKeyError, NetworkError, APIError
+
+__all__ = [
+    "FireKeyProcessor",
+    "FireKeyError",
+    "NetworkError",
+    "APIError",
+]
 """FireKey package providing API token usage tracking utilities."""
 
 from .tracker import TokenUsageTracker, ModelPricing
