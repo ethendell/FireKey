@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 import base64
+import csv
 import json
 import shutil
 import uuid
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Iterable, List, MutableMapping, Optional, Sequence
 
@@ -361,20 +363,10 @@ def _save_poster_frame(poster_frame: PosterFrame, csv_path: Path | str | None) -
     destination.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(poster_frame.source_path, destination)
     return destination
-"""Helpers for creating and updating the project metadata CSV.
 
-The helper exposed here keeps the metadata CSV in append mode so that
-existing rows are never lost.  When the CSV does not exist a header with the
-expected columns is written automatically before the new row is appended.
-"""
-from __future__ import annotations
-
-from dataclasses import dataclass
-from datetime import datetime, timezone
-import csv
-from pathlib import Path
-from typing import Iterable, Sequence
-
+# ---------------------------------------------------------------------------
+# Helpers for creating and updating the project metadata CSV.
+# ---------------------------------------------------------------------------
 FIELDNAMES = [
     "Filename",
     "Title",
