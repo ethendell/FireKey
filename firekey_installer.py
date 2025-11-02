@@ -127,6 +127,25 @@ read -p "Press RETURN to close this window..."
 
         if not shutil.which("brew"):
             raise RuntimeError("Homebrew installation incomplete. Please rerun after finishing Homebrew setup.")
+            return
+        self.update_status("Opening Homebrew installer in Terminal...")
+        messagebox.showinfo(
+            "Homebrew Required",
+            "Homebrew will be installed in a new Terminal window.\n"
+            "Follow the prompts there, then return to this installer."
+        )
+        # Run interactively for permission dialogs
+        subprocess.run(
+            "open -a Terminal 'arch -arm64 /bin/bash -c \"$(curl -fsSL "
+            "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"'",
+            shell=True
+        )
+        messagebox.showinfo(
+            "FireKEY Installer",
+            "After Homebrew finishes installing, click OK to continue."
+        )
+        if not shutil.which("brew"):
+            raise RuntimeError("Homebrew installation incomplete. Please rerun after installing Homebrew.")
 
     def install_dependencies(self):
         self.update_status("Installing dependencies...")
