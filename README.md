@@ -23,6 +23,13 @@ A curated data set is bundled with the repository. Modify `data/sample_metadata.
 pytest
 ```
 
+## SwiftUI client
+
+A native SwiftUI rendition of FireKey that mirrors the prompt-building workflow ships in
+[`swiftui/FireKeySwiftUI`](swiftui/FireKeySwiftUI). Open the folder in Xcode 15 or newer to
+run the app on iOS or macOS. Prompt templates and default context profiles are bundled as
+JSON resources so both the Python and SwiftUI experiences stay in sync.
+
 ## Packaging for macOS
 
 The repository ships helper scripts that wrap the full packaging workflow on macOS. Install the required tooling first:
